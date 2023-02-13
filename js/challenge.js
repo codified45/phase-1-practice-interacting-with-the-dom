@@ -38,14 +38,18 @@ const init = () => {
 
     function heartEventHandler(e){
         const likesContainer = document.getElementById('likeListContainer');
-        if (likedNumbersArray.includes(parseInt(secondsH1.textContent))){
-            let likedNumber = likedNumbersArray.find(() => parseInt(secondsH1.textContent));
+        if (likedNumbersArray.includes(secondsH1.textContent)){
+            console.log('Im in the if');
+            let likedNumber = parseInt(secondsH1.textContent);
             console.log(likedNumber);
             let likedNumberElement = document.querySelector(`[data-num="${likedNumber}"]`);
             let currentLikes = parseInt(likedNumberElement.firstElementChild.textContent);
+            console.log(currentLikes);
             currentLikes += 1;
             likedNumberElement.innerHTML = ` ${likedNumber} has been liked <span>${currentLikes}</span> times`;
-        } else { let newLi = document.createElement('li');
+        } else { 
+            console.log('Im in the else');
+            let newLi = document.createElement('li');
         newLi.dataset.num = parseInt(secondsH1.textContent);
         newLi.innerHTML = ` ${secondsH1.textContent} has been liked <span>1</span> time`;
         likedNumbersArray.push(newLi.dataset.num);
