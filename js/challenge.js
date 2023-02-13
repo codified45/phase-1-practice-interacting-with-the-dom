@@ -36,7 +36,7 @@ const init = () => {
         secondsH1.textContent = counterVal;
     };
 
-    function heartEventHandler(e){
+    function heartEventHandler(e){ // probably done. 
         const likesContainer = document.getElementById('likeListContainer');
         if (likedNumbersArray.includes(parseInt(secondsH1.textContent))){
             console.log('Im in the if');
@@ -52,22 +52,29 @@ const init = () => {
             let newLi = document.createElement('li');
         newLi.dataset.num = parseInt(secondsH1.textContent);
         newLi.innerHTML = ` ${secondsH1.textContent} has been liked <span>1</span> time`;
-        likedNumbersArray.push(parseInt(newLi.dataset.num));  // this pushed a string instead of integer, thats where my error was.  
+        likedNumbersArray.push(parseInt(newLi.dataset.num));  // this pushed a string instead of integer, even though I parsed it above before assigning. this is where my error was.  
         console.log(likedNumbersArray);
         console.log(newLi.dataset.num);
         likesContainer.appendChild(newLi);
         };
     };
 
-    // button.addEventListener("click", () => {
-    //     const modalId = button.dataset.modalId
-    //     const modal = document.getElementById(modalId)
-    //     modal.classList.add("show")
-    //   })
-
-
-    function pauseEventHandler(e){
-        //clearInterval(myIntervalId);
+    function pauseEventHandler(e){ //done.
+        let pausableBtns = document.getElementsByClassName('pausable');
+        if (e.target.textContent === " pause ") {
+            clearInterval(myIntervalId);
+            console.log(pausableBtns);
+            e.target.textContent = " resume ";
+            for (const button of pausableBtns) {
+                button.disabled = true;
+            };
+        } else {
+            e.target.textContent = " pause ";
+            myIntervalId = setInterval(counterFunc, 1000);
+            for (const button of pausableBtns) {
+                button.disabled = false;
+            };
+        };
     };
 
     function addCommentHandler(e){ //complete
@@ -82,15 +89,5 @@ const init = () => {
     };
 
 };
-
-
-        // function resetCounter(){ // make  button that uses this. 
-        //     secondsH1.textContent = document.querySelector('#counter').textContent;
-        //     counterH1.textContent = 0;
-        // };
-
-// create an li for every like, describing the amount of likes. The likes update (live) as many times as you click it before the second is over. 
-
-
 
 document.addEventListener('DOMContentLoaded', init);
