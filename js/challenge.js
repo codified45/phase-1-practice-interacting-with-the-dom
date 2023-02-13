@@ -38,7 +38,7 @@ const init = () => {
 
     function heartEventHandler(e){
         const likesContainer = document.getElementById('likeListContainer');
-        if (likedNumbersArray.includes(secondsH1.textContent)){
+        if (likedNumbersArray.includes(parseInt(secondsH1.textContent))){
             console.log('Im in the if');
             let likedNumber = parseInt(secondsH1.textContent);
             console.log(likedNumber);
@@ -52,7 +52,8 @@ const init = () => {
             let newLi = document.createElement('li');
         newLi.dataset.num = parseInt(secondsH1.textContent);
         newLi.innerHTML = ` ${secondsH1.textContent} has been liked <span>1</span> time`;
-        likedNumbersArray.push(newLi.dataset.num);
+        likedNumbersArray.push(parseInt(newLi.dataset.num));  // this pushed a string instead of integer, thats where my error was.  
+        console.log(likedNumbersArray);
         console.log(newLi.dataset.num);
         likesContainer.appendChild(newLi);
         };
@@ -66,7 +67,7 @@ const init = () => {
 
 
     function pauseEventHandler(e){
-
+        //clearInterval(myIntervalId);
     };
 
     function addCommentHandler(e){ //complete
