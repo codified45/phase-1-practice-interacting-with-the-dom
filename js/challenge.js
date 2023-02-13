@@ -4,12 +4,16 @@
 const init = () => {
     let secondsH1 = document.getElementById('counter'); // can't include .textContent method because then it will be a pass-by-value
     console.log(secondsH1.textContent);
-    setInterval(counterFunc, 1000);
+    let myIntervalId = setInterval(counterFunc, 1000);
     console.log(secondsH1);
+    const likedNumbersArray = [];
 
 
     document.getElementById('minus').addEventListener('click', decrementCounter);
     document.getElementById('plus').addEventListener('click', incrementCounter);
+    document.getElementById('heart').addEventListener('click', heartEventHandler);
+    document.getElementById('pause').addEventListener('click', pauseEventHandler);
+    document.getElementById('comment-form').addEventListener('submit', addCommentHandler);
 
     // need to preventdefault on submit button. probably. 
 
@@ -32,8 +36,46 @@ const init = () => {
         secondsH1.textContent = counterVal;
     };
 
-};
+    function heartEventHandler(e){
+        if (likedNumbersArray.find(parseInt(secondsH1.textContent))){
 
+        }
+        // if ()
+        // if ()
+        // check of element with that data-num already exists
+        let li = document.createElement('li');
+        li.dataset.num = parseInt(secondsH1.textContent);
+        const likesContainer = document.getElementById('likeListContainer');
+        // if (parseInt(secondsH1.textContent) === 1) {
+        //     li.textContent = ` ${secondsH1.textContent} has been liked ${} time`;
+        // } else {li.textContent = ` ${secondsH1.textContent} has been liked ${} times`};
+        likedNumbersArray.push(li.dataset.num);
+        likesContainer.appendChild(li);
+    };
+
+    // button.addEventListener("click", () => {
+    //     const modalId = button.dataset.modalId
+    //     const modal = document.getElementById(modalId)
+    //     modal.classList.add("show")
+    //   })
+
+
+    function pauseEventHandler(e){
+
+    };
+
+    function addCommentHandler(e){ //complete
+        e.preventDefault();
+        const input = document.querySelector('#comment-input');
+        console.log(input.value);
+        const p = document.createElement('p');
+        p.textContent = input.value;
+        const form = document.querySelector('#comment-form');
+        document.querySelector('#list').appendChild(p);
+        form.reset();
+    };
+
+};
 
 
         // function resetCounter(){ // make  button that uses this. 
