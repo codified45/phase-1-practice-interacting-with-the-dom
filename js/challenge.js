@@ -1,12 +1,13 @@
 
-
+const likedNumbersArray = [];
+let secondsH1 = document.getElementById('counter'); // can't include .textContent method because then it will be a pass-by-value
 
 const init = () => {
-    let secondsH1 = document.getElementById('counter'); // can't include .textContent method because then it will be a pass-by-value
+    
     console.log(secondsH1.textContent);
     let myIntervalId = setInterval(counterFunc, 1000);
     console.log(secondsH1);
-    const likedNumbersArray = [];
+    // const likedNumbersArray = [];
 
 
     document.getElementById('minus').addEventListener('click', decrementCounter);
@@ -15,7 +16,6 @@ const init = () => {
     document.getElementById('pause').addEventListener('click', pauseEventHandler);
     document.getElementById('comment-form').addEventListener('submit', addCommentHandler);
 
-    // need to preventdefault on submit button. probably. 
 
     //functions
     function counterFunc(){
@@ -37,20 +37,21 @@ const init = () => {
     };
 
     function heartEventHandler(e){
-        if (likedNumbersArray.find(parseInt(secondsH1.textContent))){
-
-        }
-        // if ()
-        // if ()
-        // check of element with that data-num already exists
-        let li = document.createElement('li');
-        li.dataset.num = parseInt(secondsH1.textContent);
         const likesContainer = document.getElementById('likeListContainer');
-        // if (parseInt(secondsH1.textContent) === 1) {
-        //     li.textContent = ` ${secondsH1.textContent} has been liked ${} time`;
-        // } else {li.textContent = ` ${secondsH1.textContent} has been liked ${} times`};
-        likedNumbersArray.push(li.dataset.num);
-        likesContainer.appendChild(li);
+        if (likedNumbersArray.includes(parseInt(secondsH1.textContent))){
+            let likedNumber = likedNumbersArray.find(() => parseInt(secondsH1.textContent));
+            console.log(likedNumber);
+            let likedNumberElement = document.querySelector(`[data-num="${likedNumber}"]`);
+            let currentLikes = parseInt(likedNumberElement.firstElementChild.textContent);
+            currentLikes += 1;
+            likedNumberElement.innerHTML = ` ${likedNumber} has been liked <span>${currentLikes}</span> times`;
+        } else { let newLi = document.createElement('li');
+        newLi.dataset.num = parseInt(secondsH1.textContent);
+        newLi.innerHTML = ` ${secondsH1.textContent} has been liked <span>1</span> time`;
+        likedNumbersArray.push(newLi.dataset.num);
+        console.log(newLi.dataset.num);
+        likesContainer.appendChild(newLi);
+        };
     };
 
     // button.addEventListener("click", () => {
