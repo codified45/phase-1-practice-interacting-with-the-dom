@@ -1,20 +1,21 @@
 
 const likedNumbersArray = [];
 let secondsH1 = document.getElementById('counter'); // can't include .textContent method because then it will be a pass-by-value
+let pausableBtns = document.getElementsByClassName('pausable');
 
 const init = () => {
     
     console.log(secondsH1.textContent);
     let myIntervalId = setInterval(counterFunc, 1000);
     console.log(secondsH1);
-    // const likedNumbersArray = [];
-
 
     document.getElementById('minus').addEventListener('click', decrementCounter);
     document.getElementById('plus').addEventListener('click', incrementCounter);
     document.getElementById('heart').addEventListener('click', heartEventHandler);
     document.getElementById('pause').addEventListener('click', pauseEventHandler);
+    document.getElementById('restart').addEventListener('click', restartEventHandler);
     document.getElementById('comment-form').addEventListener('submit', addCommentHandler);
+
 
 
     //functions
@@ -60,7 +61,6 @@ const init = () => {
     };
 
     function pauseEventHandler(e){ //done.
-        let pausableBtns = document.getElementsByClassName('pausable');
         if (e.target.textContent === " pause ") {
             clearInterval(myIntervalId);
             console.log(pausableBtns);
@@ -77,6 +77,20 @@ const init = () => {
         };
     };
 
+    function restartEventHandler(){
+        let heart = document.getElementById('heart');
+        let pauseBtn = document.getElementById('pause');
+        if (heart.disabled === true) {
+            pauseBtn.textContent = " pause "
+            for (const button of pausableBtns) {
+                button.disabled = false;
+            };
+        };
+        secondsH1.textContent = 0;
+        clearInterval(myIntervalId);
+        myIntervalId = setInterval(counterFunc, 1000);
+    };
+
     function addCommentHandler(e){ //complete
         e.preventDefault();
         const input = document.querySelector('#comment-input');
@@ -91,3 +105,19 @@ const init = () => {
 };
 
 document.addEventListener('DOMContentLoaded', init);
+
+
+/*
+                *** User Stories ***
+• See the timer increment every second once the page has loaded. (done)
+• Manually increment and decrement the counter using the plus and minus buttons. (done)
+• "Like" an individual number of the counter. I should see the count of the number of "likes" associated with that number displayed. (done)
+• Pause the counter, which should:
+	• pause the counter (done)
+	• disable all buttons except the pause and restart buttons (done)
+	• switch the label on the button from "pause" to "resume" (done)
+• Click the "restart" button to restart the counter and re-enable the buttons. (done)
+• Click the "resume" button and resume the counter, and re-enable the buttons. (done)
+• Leave comments on my gameplay, such as: "Wow, what a fun game this is." (done)
+
+*/
